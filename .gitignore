@@ -7,6 +7,9 @@ database/
 # Temporary files 
 research/
 
+# Results folder (Output) with generated cv and cover letter
+output/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
