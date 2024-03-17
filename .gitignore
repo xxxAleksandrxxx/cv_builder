@@ -1,8 +1,11 @@
 # Database
 database/
 
-# .pdf
+# PDF
 *.pdf
+
+# Temporary files 
+research/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
