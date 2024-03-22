@@ -15,16 +15,12 @@ body {
         background-color: var(--bg-color);
       }
 
-h1#cv {
-        font-size:200%;
-        text-align:center;
-        margin-bottom: 0.5em;
-}
 #cv {
         font-size:200%;
         text-align:center;
         margin-bottom: 0.5em;
 }
+
 #cv_div {
         font-family: Fira Sans, Arial;
         font-weight: 300;
@@ -42,6 +38,7 @@ h1#cv {
         line-height: 1.4;
         padding: 0em 0.5em;
 }
+
 #cv_div h1 {
         font-size: 150%;
         font-weight: 400;
@@ -50,6 +47,7 @@ h1#cv {
         margin-bottom: 0em;
         /* margin-left: 20px; */
 }
+
 #cv_div h2 {
         font-size: 120%;
         font-weight: 400;
@@ -59,27 +57,61 @@ h1#cv {
         margin-left: 0em;
         margin-right: 0em;
 }
+
 #cv_div a {
         text-decoration: underline;
         color: #0000ff;
 }
+
 #cv_div b {
         font-weight: 400;
 }
+
 #cv_div strong {
         font-weight: 400;
 }
+
 #cv_div p {
         margin: 0 0 0.4em 0;
 }
+
 #cv_div ul {
         margin: 0;
         padding: 0em 0em 0em 1em;
-      }
+}
+
+#cv_div table {
+        border-collapse: collapse;
+}
+
+/* Set distance between cells  */
+#cv_div td {
+        border-collapse: collapse;
+        padding: 0em 0.3em;
+    }
+
+/* Remove left padding for first cell in each row */
+#cv_div td:first-child {
+        padding-left: 0em;
+}
+
+/* Set top padding to 0 for all cells in the first row */
+#cv_div tr:first-child td {
+        padding-top: 0em;
+}
+
 #cv_div .block {
         margin-left: 2em;
         margin-left: 0em;
 }
+
+#cv_div .item {
+        margin-bottom: 0.5em;
+        display: table;
+        page-break-inside: avoid;
+}
+
+
 /* Name and Job title */
 #cv_div .head_container {
         display: flex;
@@ -87,38 +119,37 @@ h1#cv {
         align-items: flex-end;
         margin-bottom: 0.2em;
 }
+
 #cv_div .name {
         text-align: left;
 }
+
 #cv_div .job-title {
         text-align: right;
 }
+
+
 /* Separation line */
 #cv_div .vline {
         width: 100%;
         height: 1px;
         background-color: #000;
-        margin: 0 0 1.6em 0;
+        /* margin-bottom: 0.7em; */
 }
+
+
 /* Contact data: email, phone etc. */
-#cv_div .contactinfo {
-        margin-top: .7em;
-        margin-bottom: 1.2em;
+#cv_div .contactinfo_container {
+        margin-top: 0.4em;
+        margin-bottom: 0.9em;
 }
-#cv_div .item {
-        margin-bottom: 0.5em;
-        display: table;
-        page-break-inside: avoid;
+
+/* Set distance between information parts */
+#cv_div .info_separator {
+        width: 0.7em;
 }
-#cv_div .contact_left {
-        width: 3.6em;
-        display: table-cell;
-        line-height: .8;
-}
-#cv_div .contact_right {
-        display: table-cell;
-        line-height: .8;
-}
+
+
 /* Objectives - Biography */
 #cv_div .bio {
         margin-top: .7em;
@@ -126,7 +157,20 @@ h1#cv {
         margin-left: 0em;
         margin-right: 0em;
 }
+
+
 /* Education */
+#cv_div .yearrange {
+        width: 5.6em;
+        display: table-cell;
+}
+
+#cv_div .yearright {
+        display: table-cell;
+}
+
+
+/* Coursework */
 #cv_div .coursework-year {
         width: 2.8em;
         display: table-cell;
@@ -136,29 +180,27 @@ h1#cv {
         display: table-cell;
         line-height: 1.0;
 }
-#cv_div .yearrange {
-        width: 5.6em;
-        display: table-cell;
-}
-#cv_div .yearright {
-        display: table-cell;
-}
+
 #cv_div .onelineitem {
         margin-bottom: 0.3em;
         display: table;
         /* page-break-inside: avoid; */
 }
+
+
+/* Contributions */
 #cv_div .tt {
         /* font-family: Roboto Mono, "Courier New", Courier, monospace; */
         font-family: Menlo, Roboto Mono, "Courier New", Courier, monospace;
         font-weight: 600;
 }
-/* Contributions */
 #cv_div .contributions {
         margin-bottom: 0.1em;
         /* display: table-cell; */
         /* display: table; */
 }
+
+
 /* Anti-bot anti-autorating*/
 #cv_div .antibot {
         color: var(--antispam-color);
@@ -169,8 +211,6 @@ h1#cv {
 }
 
 
-
-
 /* Setup for one-page looking */
 /* @page {
         size: A4;
@@ -179,6 +219,7 @@ h1#cv {
         margin-left: 2cm;
         margin-right: 1cm;
       } */
+
 
 /* Setup for page printing */
 @media print{
