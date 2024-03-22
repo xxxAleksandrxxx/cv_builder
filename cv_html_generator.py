@@ -1,12 +1,15 @@
 import os          # to to get current file path
 import webbrowser  # to open browser after cv is created
 
-import database.data_work as data_work
-import database.data_coursework as data_coursework
-import database.data_education as data_education
-import database.data_contact_info as data_contact_info
-import database.data_objectives as data_objectives
-import database.data_contributions as data_contributions
+# import database.data_work as data_work
+# import database.data_coursework as data_coursework
+# import database.data_education as data_education
+# import database.data_contact_info as data_contact_info
+# import database.data_objectives as data_objectives
+# import database.data_contributions as data_contributions
+
+from database.db_test import data as db
+
 
 # CSS template to use in generated html
 file_css = "../css/cv.css"
@@ -14,12 +17,12 @@ file_css = "../css/cv.css"
 # Folder to store generated html
 file_cv = "output/cv.html"
 
-data_name = data_contact_info.data["name"]
-data_job_title = data_contact_info.data["job_title"]
-data_email = data_contact_info.data["email"]
-data_phone = data_contact_info.data["phone"]
-data_github = data_contact_info.data["github"]
-data_linkedin = data_contact_info.data["linkedin"]
+# data_name = data_contact_info.data["name"]
+# data_job_title = data_contact_info.data["job_title"]
+# data_email = data_contact_info.data["email"]
+# data_phone = data_contact_info.data["phone"]
+# data_github = data_contact_info.data["github"]
+# data_linkedin = data_contact_info.data["linkedin"]
 
 
 # NAME AND JOB TITLE
@@ -38,7 +41,7 @@ def html_header(data_name, data_job_title):
 
 
 # CONTACT INFO
-def html_contactinfo(data_email, data_phone, data_github):
+def html_contactinfo(data_email, data_phone, data_github, data_linkedin):
     data_contactinfo_html = f'''
             <table>
                 <tr>
@@ -46,7 +49,7 @@ def html_contactinfo(data_email, data_phone, data_github):
                     <td><a href="{data_email}">{data_email}</a></td>
                     <td class="info_separator"></td>
                     <td>Linkedin:</td>
-                    <td><a href="https://www.linkedin.com/in/alex-duk">https://www.linkedin.com/in/alex-duk</a></td>
+                    <td><a href="{data_linkedin}">{data_linkedin}</a></td>
                 </tr>
                     <td>Phone:</td>
                     <td>{data_phone}</td>
@@ -58,7 +61,6 @@ def html_contactinfo(data_email, data_phone, data_github):
             </table>
 
         '''
-
     return f'''
         <div class="contactinfo_container">
             {data_contactinfo_html}
@@ -75,16 +77,6 @@ def html_objectives(data_objectives):
                 {[data_objectives, data_objectives.replace("\n", "<br />")][data_objectives.find("\n") == -1]}
             </div>
     '''
-
-    # v1
-    # html_objectives = f'''
-    #     <h2>Bio</h2>
-    #     <div class="block">
-    #         {data_objectives_html}
-    #     </div>
-    # '''
-
-    #v2
     return f'''
         <div class="bio">
             {data_objectives_html}
@@ -139,7 +131,6 @@ def html_education(data_education):
         '''
         data_education_html.append(item_html)
     data_education_html = "\n".join(data_education_html)
-
     return f'''
         <h2>Education</h2>
         <div class="block">
@@ -164,7 +155,6 @@ def html_coursework(data_coursework):
         '''
         data_coursework_html.append(item_html)
     data_coursework_html = "\n".join(data_coursework_html)
-
     return f'''
         <h2>Additional Coursework</h2>
         <div class="block">
@@ -229,7 +219,6 @@ def html_contributions(data_contributions):
         '''
         data_contributions_html.append(item_html)
     data_contributions_html = "\n".join(data_contributions_html)
-
     return f'''
         <h2>Software Contributions</h2>
         <div class="block">
@@ -249,7 +238,7 @@ def html_ventures(data_ventures):
                 <div class="yearrange">2007&#8211;2012</div>
                 <div class="yearright">
                     <strong>Brambling Design</strong>,
-                        Co-Founder/Lead Developer
+                    Co-Founder/Lead Developer
                 </div>
             </div>
             
@@ -268,8 +257,8 @@ def html_antibot():
     '''
 
 
-# # HTML PAGE
-def html_main(name, job_title, email, phone, github, objectives, researches, educations, coursework, works, contributions, ventures):
+# HTML PAGE
+def html_main(name, job_title, email, phone, github, linkedin, objectives, researches, educations, coursework, works, contributions, ventures):
     return f'''<!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -286,7 +275,7 @@ def html_main(name, job_title, email, phone, github, objectives, researches, edu
         
     <div id="cv_div">
         {html_header(name, job_title)}
-        {html_contactinfo(email, phone, github)}
+        {html_contactinfo(email, phone, github, linkedin)}
         {html_objectives(objectives)}
         {html_research(researches)}
         {html_education(educations)}
@@ -304,48 +293,36 @@ def html_main(name, job_title, email, phone, github, objectives, researches, edu
 #     f.write(html_main)
 
 
+def build(db_data, job_title, phone_type):
+    name = db_data["user"]["name"]
+    email = db_data["user"]["email"]
+    phone = db_data["user"]["phone"][phone_type]
+    github = db_data["user"]["github"]
+    linkedin = db_data["user"]["linkedin"]
+    objectives = db_data["objectives"]  # objectives from database
+    researches = db_data["researches"]
+    educations = db_data["educations"]
+    coursework = db_data["coursework"]
+    works = db_data["works"]
+    contributions = db_data["contributions"]
+    ventures = db_data["ventures"]
 
-
-def build(
-    name="John Smith",
-    job_title="Blacksmith",
-    email="John@yahoo.com",
-    phone="+0 00 000 00 00",
-    github="JhonSmith.github.com",
-    objectives="I'm the best Blacksmith ever!!!",
-    researches="",
-    educations="",
-    coursework="",
-    works="",
-    contributions="",
-    ventures=""
-    ):
     with open(file_cv, 'w') as f:
         try:
-            f.write(html_main(name, job_title, email, phone, github, objectives, researches, educations, coursework, works, contributions, ventures))
+            f.write(html_main(name, job_title, email, phone, github, linkedin, objectives, researches, educations, coursework, works, contributions, ventures))
         except Exception as e:
             print("Error. didn't succeed with f.write(html_main)")
             print(e)
 
 
+
 if __name__ == '__main__':
     try:
         build(
-            name = data_contact_info.data["name"],
-            # job_title = data_contact_info.data["job_title"],
-            job_title = "Data Scientist",
-            email = data_contact_info.data["email"],
-            phone = data_contact_info.data["phone"],
-            github = data_contact_info.data["github"],
-            objectives = data_objectives.data,
-            researches = "",
-            educations = data_education.data,
-            coursework = data_coursework.data,
-            works = data_work.data,
-            contributions = data_contributions.data,
-            ventures = ""
+            db,
+            "Data Scientist",
+            "th"               #th, uz_beeline, uz_mobile
         )
-        
         webbrowser.open_new_tab("".join(["file:///", os.getcwd(), "/", file_cv]))
     except:
         print("Something happened and build() didn't run")
