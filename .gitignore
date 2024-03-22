@@ -1,10 +1,12 @@
 .venv/
 .DS_Store/
+__pycache__/
+
 database/
 research/
 output/
-__pycache__/
 tests/
+
 .vscode/
 .idea/
 
