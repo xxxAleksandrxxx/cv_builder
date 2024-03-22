@@ -1,9 +1,11 @@
-.venv
+.venv/
+.DS_Store/
 database/
 research/
 output/
-.DS_Store/
 __pycache__/
-*.pdf
+tests/
 .vscode/
 .idea/
+
+*.pdf
