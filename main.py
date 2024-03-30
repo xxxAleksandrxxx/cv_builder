@@ -2,7 +2,7 @@ import os          # to to get current file path
 import webbrowser  # to open browser after cv is created
 
 from cv_html_generator import build
-from database.db_test import data as db
+from database.db_engineer import data as db
 
 
 # file_css = "../css/cv_helion.css"
