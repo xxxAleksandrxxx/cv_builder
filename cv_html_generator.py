@@ -1,5 +1,5 @@
-import os          # to to get current file path
-import webbrowser  # to open browser after cv is created
+# import os          # to to get current file path
+# import webbrowser  # to open browser after cv is created
 
 # import database.data_work as data_work
 # import database.data_coursework as data_coursework
@@ -8,14 +8,14 @@ import webbrowser  # to open browser after cv is created
 # import database.data_objectives as data_objectives
 # import database.data_contributions as data_contributions
 
-from database.db_test import data as db
+# from database.db_test import data as db
 
 
-# CSS template to use in generated html
-file_css = "../css/cv.css"
+# # CSS template to use in generated html
+# file_css = "../css/cv_helion.css"
 
-# Folder to store generated html
-file_cv = "output/cv.html"
+# # Folder to store generated html
+# file_cv = "output/cv.html"
 
 # data_name = data_contact_info.data["name"]
 # data_job_title = data_contact_info.data["job_title"]
@@ -258,7 +258,7 @@ def html_antibot():
 
 
 # HTML PAGE
-def html_main(name, job_title, email, phone, github, linkedin, objectives, researches, educations, coursework, works, contributions, ventures):
+def html_main(file_css, name, job_title, email, phone, github, linkedin, objectives, researches, educations, coursework, works, contributions, ventures):
     return f'''<!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -289,11 +289,7 @@ def html_main(name, job_title, email, phone, github, linkedin, objectives, resea
     </html>'''
 
 
-# with open(file_cv, 'w+') as f:
-#     f.write(html_main)
-
-
-def build(db_data, job_title, phone_type):
+def build(file_css, file_cv, db_data, job_title, phone_type):
     name = db_data["user"]["name"]
     email = db_data["user"]["email"]
     phone = db_data["user"]["phone"][phone_type]
@@ -309,21 +305,21 @@ def build(db_data, job_title, phone_type):
 
     with open(file_cv, 'w') as f:
         try:
-            f.write(html_main(name, job_title, email, phone, github, linkedin, objectives, researches, educations, coursework, works, contributions, ventures))
+            f.write(html_main(file_css, name, job_title, email, phone, github, linkedin, objectives, researches, educations, coursework, works, contributions, ventures))
         except Exception as e:
             print("Error. didn't succeed with f.write(html_main)")
             print(e)
 
 
 
-if __name__ == '__main__':
-    try:
-        build(
-            db,
-            "Data Scientist",
-            "th"               #th, uz_beeline, uz_mobile
-        )
-        webbrowser.open_new_tab("".join(["file:///", os.getcwd(), "/", file_cv]))
-    except:
-        print("Something happened and build() didn't run")
-        print(Exception)
+# if __name__ == '__main__':
+#     try:
+#         build(
+#             db,
+#             "Experiment & Test Engineer, Plasmas",
+#             "th"               #th, uz_beeline, uz_mobile
+#         )
+#         webbrowser.open_new_tab("".join(["file:///", os.getcwd(), "/", file_cv]))
+#     except:
+#         print("Something happened and build() didn't run")
+#         print(Exception)
