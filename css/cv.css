@@ -8,6 +8,8 @@
         
         --bg-color: #ffffff;
         --antispam-color: #fefefe;
+        /* --link-color: #0000ff; */
+        --link-color: #0942B0;
 }
 
 
@@ -60,7 +62,8 @@ body {
 
 #cv_div a {
         text-decoration: underline;
-        color: #0000ff;
+        /* color: #0000ff; */
+        color: var(--link-color);
 }
 
 #cv_div b {
@@ -193,6 +196,7 @@ body {
         /* font-family: Roboto Mono, "Courier New", Courier, monospace; */
         font-family: Menlo, Roboto Mono, "Courier New", Courier, monospace;
         font-weight: 600;
+        color: var(--link-color);
 }
 #cv_div .contributions {
         margin-bottom: 0.1em;
