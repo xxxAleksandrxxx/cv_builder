@@ -26,7 +26,7 @@
 
 
 # NAME AND JOB TITLE
-def html_header(data_name, data_job_title):
+def html_header(data_name="", data_job_title=""):
     if any([data_name, data_job_title]):
         return f'''
             <div class="head_container">
@@ -44,7 +44,7 @@ def html_header(data_name, data_job_title):
 
 
 # CONTACT INFO
-def html_contactinfo(data_email, data_phone, data_linkedin="", data_github=""):
+def html_contactinfo(data_email="", data_phone="", data_linkedin="", data_github=""):
     if any([data_email, data_phone, data_linkedin, data_github]):
         data_contactinfo_html = f'''
                 <table>
@@ -76,7 +76,7 @@ def html_contactinfo(data_email, data_phone, data_linkedin="", data_github=""):
 # OBJECTIVES
 # data_objectives = '''I am interested in the intersection between biology, cognition, and machine intelligence. 
 # My research experiences range from computational approaches such as machine perception and statistical modeling, to behavioral approaches such as field ethology with chimpanzees and operant conditioning with songbirds, to physiological approaches such as freely behaving ephys with songbirds and rodents.'''
-def html_objectives(data_objectives):
+def html_objectives(data_objectives=""):
     if data_objectives:
         data_objectives_html = f'''
                 <div class="block">
@@ -93,28 +93,26 @@ def html_objectives(data_objectives):
 
 
 # SKILLS
-def html_skills(data_skills):
+def html_skills(data_skills=[]):
+    '''
+    assume that data_skills is a list of strings
+    '''
     if data_skills:
+    
         # version for work description as a list with bullets
         data_skills_html = []
+        list_html = []
         for item in data_skills:
-            # convert description to list html code
-            list_html = []
-            for description_item in item["description"].split('\n'):
-                list_html.append(f"<li>{description_item}</li>")
-            list_html = "\n\t\t\t\t\t".join(list_html)  # to make .html file looks nice
-            # html code for work
-            item_html = f'''
-                <div class="onelineitem">
-                    
-                    <ul>
-                        {list_html}
-                    </ul>
-                </div>
-                '''
-            data_skills_html.append(item_html)
-
-        data_skills_html = "\n".join(data_skills_html)
+            list_html.append(f"<li>{item}</li>")
+        list_html = "\n\t\t\t\t\t".join(list_html)
+        data_skills_html = f'''
+            <div class="onelineitem">
+                
+                <ul>
+                    {list_html}
+                </ul>
+            </div>
+            '''
         return f'''
             <h2>Skills</h2>
             <div class="block">
@@ -127,7 +125,7 @@ def html_skills(data_skills):
 
 # RESEARCH INTERESTS
 # probably it's good idea to convert it to list of skills...
-def html_research(research):
+def html_research(research=""):
     if research:
         data_research_html = f'''
             <div class="block">
@@ -158,7 +156,7 @@ def html_research(research):
 
 
 # EDUCATION
-def html_education(data_education):
+def html_education(data_education=""):
     if data_education:
         data_education_html = []
         for item in data_education:
@@ -187,7 +185,7 @@ def html_education(data_education):
 
 
 # ADDITIONAL COURSEWORK
-def html_coursework(data_coursework):
+def html_coursework(data_coursework=""):
     if data_coursework:
         data_coursework_html = []
         for item in data_coursework:
@@ -214,7 +212,7 @@ def html_coursework(data_coursework):
 
 
 # WORK EXPERIENCE
-def html_work(data_work):
+def html_work(data_work=""):
     if data_work:
         # use data from data_work.py
         # version for work description as a text ''' '''
@@ -260,7 +258,7 @@ def html_work(data_work):
 
 
 # CONTRIBUTION
-def html_contributions(data_contributions):
+def html_contributions(data_contributions=""):
     if data_contributions:
         data_contributions_html = []
         for item in data_contributions:
@@ -282,7 +280,7 @@ def html_contributions(data_contributions):
         return ""
 
 
-def html_ventures(data_ventures):
+def html_ventures(data_ventures=""):
     if data_ventures:
         '''
         <h2>Employment and Business Ventures</h2>
@@ -316,7 +314,7 @@ def html_antibot():
 
 
 # HTML PAGE
-def html_main(file_css, name, job_title, email, phone, github, linkedin, objectives, skills, researches, educations, coursework, works, contributions, ventures):
+def html_main(file_css="", name="", job_title="", email="", phone="", github="", linkedin="", objectives="", skills="", researches="", educations="", coursework="", works="", contributions="", ventures=""):
     return f'''<!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -359,6 +357,16 @@ def build(file_css="", file_cv="", db_data="", job_title="", phone_type=""):
     if flag == False:
         return
 
+    params = {"user": "", "objectives": "", "skills": "", "researches": "", "educations": "", "coursework": "", "works": "", "contributions": "", "ventures": ""}    
+    flag = True
+    for p in params:
+        try:
+            db_data[p]
+        except Exception as e:
+            print("Database field missed:", p)
+            print(e)
+            flag = False
+
     name = db_data["user"]["name"]
     email = db_data["user"]["email"]
     phone = db_data["user"]["phone"][phone_type]
@@ -372,9 +380,11 @@ def build(file_css="", file_cv="", db_data="", job_title="", phone_type=""):
     works = db_data["works"]
     contributions = db_data["contributions"]
     ventures = db_data["ventures"]
-    
+
+
     with open(file_cv, 'w') as f:
         try:
+            print(html_main(file_css, name, job_title, email, phone, github, linkedin, objectives, skills, researches, educations, coursework, works, contributions, ventures))
             f.write(html_main(file_css, name, job_title, email, phone, github, linkedin, objectives, skills, researches, educations, coursework, works, contributions, ventures))
         except Exception as e:
             print("Error. didn't succeed with f.write(html_main)")
