@@ -6,7 +6,7 @@
 
 :root {
         /* Main control for page size adjustment */
-        --main-font-size: 10pt;
+        --main-font-size: 10.5pt;
         
         --bg-color: #ffffff;
         --antispam-color: #fefefe;
@@ -143,7 +143,8 @@ body {
 
 /* Contact data: email, phone etc. */
 #cv_div .contactinfo_container {
-        margin-top: 0.4em;
+        /* margin-top: 0.4em; */
+        margin-top: 1.4em;
         margin-bottom: 0.9em;
 }
 
