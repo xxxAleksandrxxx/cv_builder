@@ -52,8 +52,8 @@ def html_contactinfo(data_email, data_phone, data_linkedin="", data_github=""):
                         <td>Email:</td>
                         <td><a href="{data_email}">{data_email}</a></td>
                         <td class="info_separator"></td>
-                        <td>Linkedin:</td>
-                        <!-- <td>{["", "Linkedin:"][len(data_linkedin)!=0]}</td> -->
+                        <!--  <td>Linkedin:</td>  -->
+                        <td>{["", "Linkedin:"][len(data_linkedin)!=0]}</td>
                         <td><a href="{data_linkedin}">{data_linkedin}</a></td>
                     </tr>
                         <td>Phone:</td>
@@ -92,6 +92,39 @@ def html_objectives(data_objectives):
         return ""
 
 
+# SKILLS
+def html_skills(data_skills):
+    if data_skills:
+        # version for work description as a list with bullets
+        data_skills_html = []
+        for item in data_skills:
+            # convert description to list html code
+            list_html = []
+            for description_item in item["description"].split('\n'):
+                list_html.append(f"<li>{description_item}</li>")
+            list_html = "\n\t\t\t\t\t".join(list_html)  # to make .html file looks nice
+            # html code for work
+            item_html = f'''
+                <div class="onelineitem">
+                    
+                    <ul>
+                        {list_html}
+                    </ul>
+                </div>
+                '''
+            data_skills_html.append(item_html)
+
+        data_skills_html = "\n".join(data_skills_html)
+        return f'''
+            <h2>Skills</h2>
+            <div class="block">
+                {data_skills_html}
+            </div>
+        '''
+    else:
+        return ""
+
+
 # RESEARCH INTERESTS
 # probably it's good idea to convert it to list of skills...
 def html_research(research):
@@ -119,6 +152,7 @@ def html_research(research):
         #     </div>
         # '''
         # no research interest part
+        return ""
     else:
         return ""
 
@@ -282,7 +316,7 @@ def html_antibot():
 
 
 # HTML PAGE
-def html_main(file_css, name, job_title, email, phone, github, linkedin, objectives, researches, educations, coursework, works, contributions, ventures):
+def html_main(file_css, name, job_title, email, phone, github, linkedin, objectives, skills, researches, educations, coursework, works, contributions, ventures):
     return f'''<!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -301,6 +335,7 @@ def html_main(file_css, name, job_title, email, phone, github, linkedin, objecti
         {html_header(name, job_title)}
         {html_contactinfo(email, phone, linkedin, github)}
         {html_objectives(objectives)}
+        {html_skills(skills)}
         {html_research(researches)}
         {html_education(educations)}
         {html_coursework(coursework)}
@@ -313,37 +348,38 @@ def html_main(file_css, name, job_title, email, phone, github, linkedin, objecti
     </html>'''
 
 
-def build(file_css, file_cv, db_data, job_title, phone_type):
+def build(file_css="", file_cv="", db_data="", job_title="", phone_type=""):
+    # check that function got all the parameters
+    params = {"file_cs": file_css, "file_cv": file_cv, "db_data": db_data, "job_title": job_title, "phone_type": phone_type}
+    flag = True
+    for p in params:
+        if len(params[p]) == 0:
+            print("Missed parameter:", p)
+            flag = False
+    if flag == False:
+        return
+
     name = db_data["user"]["name"]
     email = db_data["user"]["email"]
     phone = db_data["user"]["phone"][phone_type]
     github = db_data["user"]["github"]
     linkedin = db_data["user"]["linkedin"]
     objectives = db_data["objectives"]  # objectives from database
+    skills = db_data["skills"]
     researches = db_data["researches"]
     educations = db_data["educations"]
     coursework = db_data["coursework"]
     works = db_data["works"]
     contributions = db_data["contributions"]
     ventures = db_data["ventures"]
-
+    
     with open(file_cv, 'w') as f:
         try:
-            f.write(html_main(file_css, name, job_title, email, phone, github, linkedin, objectives, researches, educations, coursework, works, contributions, ventures))
+            f.write(html_main(file_css, name, job_title, email, phone, github, linkedin, objectives, skills, researches, educations, coursework, works, contributions, ventures))
         except Exception as e:
             print("Error. didn't succeed with f.write(html_main)")
             print(e)
 
 
-
 # if __name__ == '__main__':
-#     try:
-#         build(
-#             db,
-#             "Experiment & Test Engineer, Plasmas",
-#             "th"               #th, uz_beeline, uz_mobile
-#         )
-#         webbrowser.open_new_tab("".join(["file:///", os.getcwd(), "/", file_cv]))
-#     except:
-#         print("Something happened and build() didn't run")
-#         print(Exception)
+#     build()
