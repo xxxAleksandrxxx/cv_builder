@@ -6,7 +6,7 @@ import webbrowser  # to open browser after cv is created
 from cv_html_generator import build
 from cl_html_generator import build_cl
 # from database.db_risk import data as db
-from database.db_test import data as db
+from database.db_ds import data as db
 # from database.db_engineer import data as db
 
 # file_css = "../css/cv_helion.css"
@@ -14,7 +14,7 @@ file_css = "../css/cv.css"
 file_cv = "output/cv.html"
 file_cl = "output/cl.html"
 
-phone = "th"  #th, uz_beeline, uz_mobile
+phone = "viet"  #th, viet, uz_beeline, uz_mobile
 
 job_title = "Data Scientist"
 
