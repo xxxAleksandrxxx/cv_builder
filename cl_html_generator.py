@@ -97,6 +97,7 @@ def build_cl(file_css, file_cl, db_data, job_title, phone_type, cover_letter):
     with open(file_cl, 'w') as f:
         try:
             f.write(html_main(file_css, name, job_title, email, phone, github, linkedin, cover_letter))
+            print(f"Create {file_cl}: Done")
         except Exception as e:
             print("Error. didn't succeed with f.write(html_main)")
             print(e)
