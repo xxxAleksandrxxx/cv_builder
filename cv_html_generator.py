@@ -311,50 +311,78 @@ def html_coursework(data_coursework=""):
         return ""
 
 
+# # WORK EXPERIENCE
+# def html_work(data_work=""):
+#     if data_work:
+#         # use data from data_work.py
+#         # version for work description as a text ''' '''
+#         # data_work_html = []
+#         # for item in data_work:
+#         #     item_html = f'''
+#         #         <div class="onelineitem">
+#         #             <strong>{item["start"]}&#8211;{item["end"]}&emsp;{item["job_title"]}&emsp;{item["name"]}</strong><br />
+#         #             {item["description"].replace("\n", "<br />")}
+#         #         </div>
+#         #         '''
+#         #     data_work_html.append(item_html)
+#         # data_work_html = "\n".join(data_work_html)
+
+#         # version for work description as a list with bullets
+#         data_work_html = []
+#         for item in data_work:
+#             # convert description to list html code
+#             list_html = []
+#             for description_item in item["description"].split('\n'):
+#                 list_html.append(f"<li>{description_item}</li>")
+#             list_html = "\n\t\t\t\t\t".join(list_html)
+#             # html code for work
+#             item_html = f'''
+#                 <div class="onelineitem">
+#                     <strong>{item["start"]}&#8211;{item["end"]}&emsp;{item["job_title"]}&emsp;{item["name"]}</strong><br />
+#                     <ul>
+#                         {list_html}
+#                     </ul>
+#                 </div>
+#                 '''
+#             data_work_html.append(item_html)
+
+#         data_work_html = "\n".join(data_work_html)
+#         return f'''
+#             <h2>Experience</h2>
+#             <div class="block">
+#                 {data_work_html}
+#             </div>
+#         '''
+#     else:
+#         return ""
+    
+# with list generator and "".join()
 # WORK EXPERIENCE
 def html_work(data_work=""):
-    if data_work:
-        # use data from data_work.py
-        # version for work description as a text ''' '''
-        # data_work_html = []
-        # for item in data_work:
-        #     item_html = f'''
-        #         <div class="onelineitem">
-        #             <strong>{item["start"]}&#8211;{item["end"]}&emsp;{item["job_title"]}&emsp;{item["name"]}</strong><br />
-        #             {item["description"].replace("\n", "<br />")}
-        #         </div>
-        #         '''
-        #     data_work_html.append(item_html)
-        # data_work_html = "\n".join(data_work_html)
-
-        # version for work description as a list with bullets
-        data_work_html = []
-        for item in data_work:
-            # convert description to list html code
-            list_html = []
-            for description_item in item["description"].split('\n'):
-                list_html.append(f"<li>{description_item}</li>")
-            list_html = "\n\t\t\t\t\t".join(list_html)
-            # html code for work
-            item_html = f'''
-                <div class="onelineitem">
-                    <strong>{item["start"]}&#8211;{item["end"]}&emsp;{item["job_title"]}&emsp;{item["name"]}</strong><br />
-                    <ul>
-                        {list_html}
-                    </ul>
-                </div>
-                '''
-            data_work_html.append(item_html)
-
-        data_work_html = "\n".join(data_work_html)
-        return f'''
-            <h2>Experience</h2>
-            <div class="block">
-                {data_work_html}
-            </div>
-        '''
-    else:
+    if not data_work:
         return ""
+    data_work_html = "\n".join(
+        f'''
+        <div class="onelineitem">
+            <strong>{item["start"]}&#8211;{item["end"]}&emsp;{item["job_title"]}&emsp;{item["name"]}</strong><br />
+            <ul>
+                {
+                    "\n\t\t\t\t".join(
+                        f"<li>{description_item}</li>"
+                        for description_item in item["description"].split('\n')
+                    )
+                }
+            </ul>
+        </div>
+        '''
+        for item in data_work
+    )
+    return f'''
+        <h2>Experience</h2>
+        <div class="block">
+            {data_work_html}
+        </div>
+    '''
 
 
 # CONTRIBUTION

@@ -16,7 +16,7 @@ file_cl = "output/cl.html"
 
 phone = "viet"  #th, viet, uz_beeline, uz_mobile
 
-job_title = "Data Scientist"
+job_title = "Data Management Specialist"
 
 cover_letter_flag = False
 cover_letter = '''Dear Hiring Manager,
