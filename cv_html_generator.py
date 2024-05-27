@@ -66,7 +66,7 @@ def html_objectives(data_objectives=""):
 
 # version for skills being in a list
 # SKILLS
-def html_skills(data_skills=[]):
+def html_skills(data_skills=None):
     '''
     assume that data_skills is a string
     '''
@@ -135,28 +135,33 @@ def html_education(data_education=""):
 
 
 # ADDITIONAL COURSEWORK
+# turned-off
 def html_coursework(data_coursework=""):
-    if not data_coursework:
-        return ""
-    data_coursework_html = "\n".join(
-        f'''
-        <div class="onelineitem">
-            <div class="coursework-year">
-                {item["end"]}
-            </div>
-            <div class="coursework-item">
-                {item["description"]}
-            </div>
-        </div>
-        '''
-        for item in data_coursework
-    )
-    return f'''
-        <h2>Additional Coursework</h2>
-        <div class="block">
-            {data_coursework_html}
-        </div>
-    '''
+    return ""
+
+# # turned-on
+# def html_coursework(data_coursework=""):
+#     if not data_coursework:
+#         return ""
+#     data_coursework_html = "\n".join(
+#         f'''
+#         <div class="onelineitem">
+#             <div class="coursework-year">
+#                 {item["end"]}
+#             </div>
+#             <div class="coursework-item">
+#                 {item["description"]}
+#             </div>
+#         </div>
+#         '''
+#         for item in data_coursework
+#     )
+#     return f'''
+#         <h2>Additional Coursework</h2>
+#         <div class="block">
+#             {data_coursework_html}
+#         </div>
+#     '''
 
 
 # WORK EXPERIENCE
@@ -177,7 +182,7 @@ def html_work(data_work=""):
             </ul>
         </div>
         '''
-        for item in data_work
+        for item in data_work[::-1]
     )
     return f'''
         <h2>Experience</h2>
@@ -188,26 +193,32 @@ def html_work(data_work=""):
 
 
 # CONTRIBUTION
+#turned off
 def html_contributions(data_contributions=""):
-    if not data_contributions:
-        return ""
-    data_contributions_html = "\n".join(
-        f'''
-        <div class="contributions">
-            <span class="tt"><a href="{item["link"]}">{item["name"]}</a></span>,  {item["type"]}<br />
-            {item["description"]}
-        </div>
-        '''
-        for item in data_contributions
-    )
-    return f'''
-        <h2>Software Contributions</h2>
-        <div class="block">
-            {data_contributions_html}
-        </div>
-    '''
+    return ""
+
+# #turned-on
+# def html_contributions(data_contributions=""):
+#     if not data_contributions:
+#         return ""
+#     data_contributions_html = "\n".join(
+#         f'''
+#         <div class="contributions">
+#             <span class="tt"><a href="{item["link"]}">{item["name"]}</a></span>,  {item["type"]}<br />
+#             {item["description"]}
+#         </div>
+#         '''
+#         for item in data_contributions
+#     )
+#     return f'''
+#         <h2>Software Contributions</h2>
+#         <div class="block">
+#             {data_contributions_html}
+#         </div>
+#     '''
 
 
+# VENTURES
 def html_ventures(data_ventures=""):
     if not data_ventures:
         return ""
@@ -227,7 +238,6 @@ def html_ventures(data_ventures=""):
     # </div>
     # '''
     return ""
-    
 
 
 # ANTI-BOT
@@ -311,8 +321,9 @@ def build(file_css="", file_cv="", db_data="", job_title="", phone_type=""):
 
     with open(file_cv, 'w') as f:
         try:
-            print(html_main(file_css, name, job_title, email, phone, github, linkedin, objectives, skills, researches, educations, coursework, works, contributions, ventures))
+            # print(html_main(file_css, name, job_title, email, phone, github, linkedin, objectives, skills, researches, educations, coursework, works, contributions, ventures))
             f.write(html_main(file_css, name, job_title, email, phone, github, linkedin, objectives, skills, researches, educations, coursework, works, contributions, ventures))
+            print(f"Create {file_cv}: Done")
         except Exception as e:
             print("Error. didn't succeed with f.write(html_main)")
             print(e)
