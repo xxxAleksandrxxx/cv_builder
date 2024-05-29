@@ -1,3 +1,5 @@
+from database.data_objectives import data as objectives_data  # get objectives form separate file. preparation for automation and AI integration.
+
 # NAME AND JOB TITLE
 def html_header(data_name="", data_job_title=""):
     if not any([data_name, data_job_title]):
@@ -309,7 +311,8 @@ def build(file_css="", file_cv="", db_data="", job_title="", phone_type=""):
     phone = db_data["user"]["phone"][phone_type]
     github = db_data["user"]["github"]
     linkedin = db_data["user"]["linkedin"]
-    objectives = db_data["objectives"]  # objectives from database
+    # objectives = db_data["objectives"]  # objectives from database
+    objectives = objectives_data  # objectives from separate file
     skills = db_data["skills"]
     researches = db_data["researches"]
     educations = db_data["educations"]
